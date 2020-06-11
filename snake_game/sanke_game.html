@@ -6,16 +6,20 @@
 </head>
 
 <body>
+
     <center>
+        <h1>PONTUAÇÃO </h1>
+        <h1>RECORDE </h1>
+
         <canvas id="stage" width="600" height="600"></canvas>
         <script type="text/javascript">
-
+            var pontuacao = 0;
             window.onload = function () {
 
                 var stage = document.getElementById('stage');
                 var ctx = stage.getContext("2d");
                 document.addEventListener("keydown", keyPush);
-                setInterval(jogo, 100);
+                setInterval(jogo, 150);
 
                 const velocidade = 1;
                 var velocidadeX = 0;
@@ -26,6 +30,7 @@
                 var quantidadePonto = 20;
                 var posicaoMacaX = 15;
                 var posicaoMacaY = 15;
+                var direcao = 0;
 
                 var rastro = [];
                 tamanhoCobra = 1;
@@ -34,16 +39,28 @@
                     pontoX += velocidadeX;
                     pontoY += velocidadeY;
                     if (pontoX < 0) {
-                        pontoX = quantidadePonto - 1;
+                        velocidadeX = velocidadeY = 0;
+                        pontoX = 10;
+                        pontoY = 15;
+                        tamanhoCobra = 1;
                     }
                     if (pontoX > quantidadePonto - 1) {
-                        pontoX = 0;
+                        velocidadeX = velocidadeY = 0;
+                        pontoX = 10;
+                        pontoY = 15;
+                        tamanhoCobra = 1;
                     }
                     if (pontoY < 0) {
-                        pontoY = quantidadePonto - 1;
+                        velocidadeX = velocidadeY = 0;
+                        pontoX = 10;
+                        pontoY = 15;
+                        tamanhoCobra = 1;
                     }
                     if (pontoY > quantidadePonto - 1) {
-                        pontoY = 0;
+                        velocidadeX = velocidadeY = 0;
+                        pontoX = 10;
+                        pontoY = 15;
+                        tamanhoCobra = 1;
                     }
 
                     ctx.fillStyle = "green";
@@ -68,6 +85,7 @@
 
                     if (posicaoMacaX == pontoX && posicaoMacaY == pontoY) {
                         tamanhoCobra++;
+                        pontuacao++;
                         posicaoMacaX = Math.floor(Math.random() * quantidadePonto);
                         posicaoMacaY = Math.floor(Math.random() * quantidadePonto);
                     }
@@ -78,20 +96,32 @@
 
                     switch (event.keyCode) {
                         case 37:
-                            velocidadeX = -velocidade;
-                            velocidadeY = 0;
+                            if (direcao != 39) {
+                                direcao = 37;
+                                velocidadeX = -velocidade;
+                                velocidadeY = 0;
+                            }
                             break;
                         case 38:
-                            velocidadeX = 0;
-                            velocidadeY = -velocidade;
+                            if (direcao != 40) {
+                                direcao = 38;
+                                velocidadeX = 0;
+                                velocidadeY = -velocidade;
+                            }
                             break;
                         case 39:
-                            velocidadeX = velocidade;
-                            velocidadeY = 0;
+                            if (direcao != 37) {
+                                direcao = 39;
+                                velocidadeX = velocidade;
+                                velocidadeY = 0;
+                            }
                             break;
                         case 40:
-                            velocidadeX = 0;
-                            velocidadeY = velocidade;
+                            if (direcao != 38) {
+                                direcao = 40;
+                                velocidadeX = 0;
+                                velocidadeY = velocidade;
+                            }
                             break;
                         default:
                             break;
